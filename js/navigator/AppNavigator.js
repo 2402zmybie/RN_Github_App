@@ -3,8 +3,9 @@
 import {createStackNavigator,createSwitchNavigator} from 'react-navigation'
 
 import Welcome from '../page/Welcome'
-import HomePage from '../page/HomePage'
+import HomePage from '../page/HomePage'  //首页变成动态的了
 import DetailPage from '../page/DetailPage'
+import DynamicBotTabNavigator from './DynamicBotTabNavigator'
 
 
 const WelcomeNavigator = createStackNavigator({
@@ -17,8 +18,8 @@ const WelcomeNavigator = createStackNavigator({
 })
 
 const InitApp = createStackNavigator({
-    HomePage: {
-        screen: HomePage,
+    DynamicBotTabNavigator: {
+        screen: DynamicBotTabNavigator,
         navigationOptions: {
             header: null
         }

@@ -11,35 +11,31 @@ export default class PopularPage extends Component<Props> {
     constructor(props) {
         super(props)
         console.disableYellowBox = true
+        this.tabNames = ['Java','Android','Ios','React','React Native','Php']
+    }
+
+    _genTabs() {
+        const tabs = {};
+        this.tabNames.forEach((item,index) => {
+            tabs[`tab${index}`] = {
+                //TODO 这个技巧  在这里配置各个页面的时候 可以向页面传递参数
+                screen: props => <PopularTopPage {...props} tabLabel={item}/>,
+                navigationOptions: {
+                    title:item
+                }
+            }
+        })
+        return tabs;
     }
 
     render() {
-        const TabTopNavigator = createMaterialTopTabNavigator({
-            PopularTopPage1: {
-                screen: PopularTopPage,
-                navigationOptions: {
-                    tabBarLabel: "PopularTopPage1"
-                }
-            },
-            PopularTopPage2: {
-                screen: PopularTopPage,
-                navigationOptions: {
-                    tabBarLabel: "PopularTopPage2"
-                }
-            },
-            PopularTopPage3: {
-                screen: PopularTopPage,
-                navigationOptions: {
-                    tabBarLabel: "PopularTopPage3"
-                }
-            }
-        },{
+        const TabTopNavigator = createMaterialTopTabNavigator(this._genTabs(),{
             tabBarOptions: {
-                upperCaseLabel: false,
+                upperCaseLabel: false,   //是否使标签大写
                 tabStyle: {mindWidth: 50},
-                scrollEnabled:true,
+                scrollEnabled:true,   //不是挤在一行,而是可以滑动
                 style: {backgroundColor: '#678'},
-                indicatorStyle: {height:2,backgroundColor:'pink'},
+                indicatorStyle: {height:2,backgroundColor:'white'},
                 labelStyle: {fontSize: 13,marginTop:6,marginBottom:6}
             }
         });
@@ -49,10 +45,12 @@ export default class PopularPage extends Component<Props> {
 
 //定义显示的页面
 class PopularTopPage extends Component {
+
     render() {
+        const {tabLabel} = this.props;
         return (
             <View>
-                <Text>{'PolularPage'}</Text>
+                <Text>{tabLabel}</Text>
                 <Button title={'跳转到详情页'} onPress={() => {
                     NavigationUtil.goPage(
                         {navigation: this.props.navigation},
